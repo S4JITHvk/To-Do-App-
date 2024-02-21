@@ -41,8 +41,15 @@ const AddTodo=()=>{
     setTodolist(updatedList);
   };
 
-  const pendingTasksCount = todolist.filter((task) => !task.status).length;
+  const updateStatus = (id) => {
+    const updatedList = todolist.map((task) =>
+      task.id === id ? { ...task, status: true } : task
+    );
+    setTodolist(updatedList);
+  };
+  
 
+  const pendingTasksCount = todolist.filter((task) => !task.status).length;
 
   return (
     <div>
@@ -57,7 +64,7 @@ const AddTodo=()=>{
       <i className="fa fa-solid fa-plus"></i>
     </button>
   </div>
-  < Todolist list={todolist} deleteTask={deleteTask} updateTodo={updateTask}  />
+  < Todolist list={todolist} deleteTask={deleteTask} updateTodo={updateTask} changeStatus={updateStatus} />
   <div className="footer">
         <span>You have {pendingTasksCount} pending tasks</span>
         <button onClick={() => setTodolist([])}>Clear All</button>
