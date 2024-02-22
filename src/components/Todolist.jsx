@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import Swal from "sweetalert2";
 
-const Todolist = ({ list, deleteTask, updateTodo,ChangeStatus }) => {
+const Todolist = ({ list, deleteTask, updateTodo, changeStatus }) => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [editedTaskText, setEditedTaskText] = useState("");
 
@@ -10,14 +10,15 @@ const Todolist = ({ list, deleteTask, updateTodo,ChangeStatus }) => {
     setEditTaskId(id);
     setEditedTaskText(taskText);
   };
+
   const handleSave = () => {
     if (editedTaskText.trim() === "") {
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Task cannot be empty!',
+        icon: "error",
+        title: "Oops...",
+        text: "Task cannot be empty!",
       });
-      return; 
+      return;
     }
 
     updateTodo(editTaskId, editedTaskText);
@@ -35,31 +36,36 @@ const Todolist = ({ list, deleteTask, updateTodo,ChangeStatus }) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              color:  task.status ? "white" : "black",
+              background: task.status ? "#02cf3c" :" #eaeaeb ",
+              border:task.Status ? "border: 5px solid ##05ad32;" :  "none"
             }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <input
                 type="checkbox"
                 checked={task.status}
-                onClick={()=>ChangeStatus(task.id)}
+                onClick={() => changeStatus(task.id)}
                 style={{ marginRight: "5px" }}
               />
               <span style={{ fontWeight: "bold" }}>{task.task}</span>
             </div>
 
             <div>
-              <button
-                onClick={() => handleEdit(task.id, task.task)}
-                style={{
-                  color: "blue",
-                  backgroundColor: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  width: "30px",
-                }}
-              >
-                <i className="fas fa-edit" style={{ fontSize: "20px" }}></i>
-              </button>
+              {!task.status && (
+                <button
+                  onClick={() => handleEdit(task.id, task.task)}
+                  style={{
+                    color: "blue",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    width: "30px",
+                  }}
+                >
+                  <i className="fas fa-edit" style={{ fontSize: "20px" }}></i>
+                </button>
+              )}
               <button
                 onClick={() => deleteTask(task.id)}
                 style={{

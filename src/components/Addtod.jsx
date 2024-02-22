@@ -43,10 +43,11 @@ const AddTodo=()=>{
 
   const updateStatus = (id) => {
     const updatedList = todolist.map((task) =>
-      task.id === id ? { ...task, status: true } : task
+      task.id === id ? { ...task, status: !task.status } : task
     );
     setTodolist(updatedList);
   };
+  
   
 
   const pendingTasksCount = todolist.filter((task) => !task.status).length;
